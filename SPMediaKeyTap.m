@@ -278,22 +278,31 @@ NSString *kIgnoreMediaKeysDefaultsKey = @"SPIgnoreMediaKeys";
 	}*/
 	
     ProcessSerialNumber mySerial, topSerial;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	GetCurrentProcess(&mySerial);
+#pragma clang diagnostic pop
 	[[_mediaKeyAppList objectAtIndex:0] getValue:&topSerial];
 
 	Boolean same;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	OSErr err = SameProcess(&mySerial, &topSerial, &same);
+#pragma clang diagnostic pop
 	[self setShouldInterceptMediaKeyEvents:(err == noErr && same)];	
 
 }
 -(void)appIsNowFrontmost:(ProcessSerialNumber)psn;
 {
 	NSValue *psnv = [NSValue valueWithBytes:&psn objCType:@encode(ProcessSerialNumber)];
-	
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	NSDictionary *processInfo = [(id)ProcessInformationCopyDictionary(
 		&psn,
 		kProcessDictionaryIncludeAllInformationMask
 	) autorelease];
+#pragma clang diagnostic pop
 	NSString *bundleIdentifier = [processInfo objectForKey:(id)kCFBundleIdentifierKey];
 
 	NSArray *whitelistIdentifiers = [[NSUserDefaults standardUserDefaults] arrayForKey:kMediaKeyUsingBundleIdentifiersDefaultsKey];
@@ -315,7 +324,10 @@ static pascal OSStatus appSwitched (EventHandlerCallRef nextHandler, EventRef ev
 	SPMediaKeyTap *self = (id)userData;
 
     ProcessSerialNumber newSerial;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     GetFrontProcess(&newSerial);
+#pragma clang diagnostic pop
 	
 	[self appIsNowFrontmost:newSerial];
 		
