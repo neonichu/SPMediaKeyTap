@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/neonichu/SPMediaKeyTap.git",
                      :tag => s.version }
 
-  s.source_files  = "SPMediaKeyTap{.h,.m}", "SPMediaKeys.swift"
+  s.source_files  = "SPMediaKeyTap{.h,.m}", "SPInvocationGrabbing/NSObject+SPInvocationGrabbing.h", "SPMediaKeys.swift"
   s.frameworks    = "AppKit"
   s.requires_arc  = false
 end
